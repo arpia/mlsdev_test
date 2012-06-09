@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}
+{% trans "Questions" %}
+{% endblock %}
+
+{% block header %}
+<div class='second title'>
+    {% trans "Questions" %}
+</div>
+{% endblock %}
+
+{% block body %}
+Total: {{total_pages}}
+<br/>
+Current: {{current_page}}
+<div class='container'>
+	{% for question in questions %}
+	<div class='item'>
+		<div class='rating number'>
+			{{question.rating}}
+		</div>
+		<div class='answer number'>
+			{{question.answer_count}}
+		</div>
+		<div class='view number'>
+			{{question.view_count}}
+		</div>
+		<a href='/question/{{question.id}}'>{{question.title}}</a>
+		<div class='sender'>
+			Eugene Udovychenko
+			<img src='/media/ava.jpg'/>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+{% endblock %}

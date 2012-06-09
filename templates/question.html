@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}
+{{question.title}}
+{% endblock %}
+
+{% block header %}
+<div class='second title'>
+    {{question.title}}
+</div>
+{% endblock %}
+
+{% block body %}
+<div class='change rating'>
+	<a class='button'>/\</a><br/>
+	{{question.rating}}<br/>
+	<a class='button'>\/</a><br/>
+</div>
+<div class='container'>
+	<pre width='auto'>{{question.body}}</pre>
+</div>
+{% for answer in question.answer_set.all %}
+<div class='item'>
+	<pre width='auto'>{{answer.body}}</pre>
+	{{answer.rating}}
+</div>
+{% endfor %}
+{% endblock %}

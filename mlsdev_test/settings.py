@@ -1,3 +1,5 @@
+# -*- coding:utf-8 -*-
+
 # Django settings for mlsdev_test project.
 
 import os
@@ -111,7 +113,7 @@ ROOT_URLCONF = 'mlsdev_test.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'mlsdev_test.wsgi.application'
 
-PROJECT_ROOT = os.path.realpath(os.path.dirname(__file__))
+PROJECT_ROOT = os.path.realpath(os.path.dirname(os.path.dirname(__file__))) #коряво...
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_ROOT, 'templates'),
 )

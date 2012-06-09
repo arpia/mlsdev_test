@@ -12,6 +12,10 @@ class question (models.Model):
 	view_count = models.BigIntegerField(_(u'View count'), blank=False)
 	answer_count = models.BigIntegerField(_(u'Answer count'), blank=False)
 
+	def inc_view (self):
+		self.view_count += 1
+		super(question, self).save()
+
 	class Meta:
 		verbose_name = _(u'question')
 		verbose_name_plural = _(u'questions')

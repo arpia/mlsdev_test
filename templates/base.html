@@ -1,0 +1,47 @@
+{% load i18n %}
+<html>
+	<head>
+        <title>{% block title %}{% endblock %}</title>
+        <link rel='stylesheet' type='text/css' href='/media/style.css'/>
+    </head>
+	<body>
+		<div id="content">
+            <div class='header'>
+                <!-- <div class='user'>
+                    <a href='/accounts/'>{{user}}</a>
+                    {% if user.is_authenticated %}
+                    <a href='/accounts/logout' class='button'title='{% trans "Logout" %}'>
+                        <img src='/media/logout.png'/>
+                    </a>
+                    {% endif %}
+                    {% if user.is_staff %}
+                    <a href='/admin/' class='button' title='{% trans "Administration" %}'>
+                        <img src='/media/settings.png'/>
+                    </a>
+                    {% endif %}
+                    <form id='lang_en' action='/i18n/setlang/' method='POST'>
+                        <input type='hidden' name='language' value='en'/>
+                        <a href='#' title='{% trans "English" %}' onclick="document.getElementById('lang_en').submit()">
+                            <img src='/media/en.png'/>
+                        </a>
+                    </form>
+                    <form id='lang_ru' action='/i18n/setlang/' method='POST'>
+                        <input type='hidden' name='language' value='ru'/>
+                        <a href='#' title='{% trans "Russian" %}'onclick="document.getElementById('lang_ru').submit()">
+                            <img src='/media/ru.png'/>
+                        </a>
+                    </form>
+                </div> -->
+                <div class='title'>
+                    <a href='/'>Some title</a>
+                </div>
+                {% block header %}{% endblock %}
+            </div>
+            {% block menu %}{% endblock %}
+            <div class='body'>
+                {% block body %}{% endblock %}
+            </div>
+        </div>
+        <div id='footer' align='right'>Copyright © {% trans "Eugene Udovychenko" %} 2012</div>
+	</body>
+</html>
