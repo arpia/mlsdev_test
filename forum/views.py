@@ -67,6 +67,9 @@ def manage_question (request, number=None):
         except question.DoesNotExist:
             return redirect('forum')
 
+        if question.objects.get(id=number).sender != request.user:
+        	return redirect('forum')
+
         form = question_form(request.POST or None, instance=question.objects.get(id=number))
         if form.is_valid():
         	form.save()
@@ -91,6 +94,9 @@ def delete_question (request, number=None):
 	try:
 		question.objects.get(id=number)
 	except question.DoesNotExist:
+		return redirect('forum')
+
+	if question.objects.get(id=number).sender != request.user:
 		return redirect('forum')
 	
 	question.objects.get(id=number).delete()

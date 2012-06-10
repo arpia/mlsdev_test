@@ -12,6 +12,7 @@
 {% endblock %}
 
 {% block body %}
+{% if question.sender.username == user.username %}
 <div class='buttons'>
 	<a href='/edit/{{question.id}}' class='button' title='{% trans "Edit question" %}'>
 		<img src='/media/edit.png'/>
@@ -21,6 +22,7 @@
 		<img src='/media/delete.png'/>
 	</a>
 </div>
+{% endif %}
 <div class='change'>
 	<form id='vote_up' action='.' method='POST'>
         <input type='hidden' name='vote' value='up'/>
@@ -45,6 +47,7 @@
 	{{answer.rating}}
 </div>
 {% endfor %}
+{% if user.is_authenticated %}
 <div class='container form'>
 	<form action='/answer/' method='POST' id='answer_form'>
 		{% csrf_token %}
@@ -52,4 +55,5 @@
 		<a class='important_button' onclick="document.getElementById('answer_form').submit()">{% trans "Answer" %}</a>
 	</form>
 </div>
+{% endif %}
 {% endblock %}
