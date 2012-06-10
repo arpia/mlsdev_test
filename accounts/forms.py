@@ -6,16 +6,17 @@ from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import authenticate, login
-from django.contrib.admin import widgets
+from captcha.fields import CaptchaField
 
 class registration_form (forms.ModelForm):
+    captcha = CaptchaField()
     username = forms.CharField(label=_(u'Login'), max_length=8)
     password = forms.CharField(label=_(u'Password'), widget=forms.PasswordInput, max_length=8)
     password_again = forms.CharField(label=_(u'Password again'), widget=forms.PasswordInput, max_length=8)
 
     class Meta:
         model = user_profile
-        fields = ('username', 'password', 'password_again', 'avatar', 'first_name', 'last_name', 'gender', 'date_birth', 'email', 'jabber',)
+        fields = ('username', 'password', 'password_again', 'avatar', 'first_name', 'last_name', 'gender', 'date_birth', 'email', 'jabber', 'captcha', )
 
     def clean (self):
         username = self.cleaned_data.get('username')

@@ -15,6 +15,7 @@ class answer_form (forms.ModelForm):
 			'question': forms.HiddenInput()
 		}
 
-	# def save (self, commit=True):
-	# 	self.fields['question'].value = question.objects.get(id=self.cleaned_data.get('question_id'))
-	# 	return super(answer_form, self).save(commit)
+
+class question_form (forms.ModelForm):
+    class Meta:
+        model = question

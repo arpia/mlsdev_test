@@ -130,6 +130,7 @@ INSTALLED_APPS = (
     'forum',
     'accounts',
     'sorl.thumbnail',
+    'captcha',
 )
 
 # A sample logging configuration. The only tangible logging

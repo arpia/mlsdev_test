@@ -17,4 +17,6 @@ urlpatterns = patterns('',
 	url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
     	'document_root': os.getcwd() + '/media/'
     	}),
+	
+	url(r'^captcha/', include('captcha.urls')),
 )

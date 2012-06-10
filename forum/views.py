@@ -4,6 +4,7 @@ from models import *
 from forms import *
 
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext_lazy as _
 
 def forum (request, number=1):
@@ -41,6 +42,7 @@ def one_question (request, number=1):
 		'form':form
 		})
 
+@login_required
 def add_answer (request):
 	form = answer_form(request.POST or None)
 	if form.is_valid():
@@ -52,3 +54,36 @@ def add_answer (request):
 		next = '/question/' + request.POST.get('question')
 
 	return redirect(next)
+
+@login_required
+def manage_question (request, number=None):
+    if number:
+        form_type = _(u'Edit')
+        number = int(number)
+
+        try:
+            question.objects.get(id=number)
+        except (question.DoesNotExist):
+            return redirect('forum')
+
+        if request.method == 'POST':
+            form = question_form(request.POST)
+
+            if form.is_valid():
+                form.save()
+                return redirect('forum') #change to redirect for newly added question
+        else:
+            form = lesson_form(instance=text_lesson.objects.get(id=number))
+    else:
+        form_type = _(u'Add')
+        form = lesson_form(request.POST or None)
+        if form.is_valid():
+            form.save()
+            return redirect('lessons_index')        
+    
+    return render_to_response('manage_lesson.html', {
+        'form':form,
+        'type':form_type,
+        'user':request.user,
+        'csrfmiddlewaretoken':csrf_token(RequestContext(request))
+        })
