@@ -7,4 +7,5 @@ urlpatterns = patterns('',
 	url(r'^(?P<number>\d{1,3})/$', forum),
 	url(r'^question/$', one_question),
 	url(r'^question/(?P<number>\d{1,3})/', one_question),
+	url(r'^answer/$', add_answer),
 	)

@@ -20,10 +20,17 @@
 <div class='container'>
 	<pre width='auto'>{{question.body}}</pre>
 </div>
-{% for answer in question.answer_set.all %}
+{% for answer in answers %}
 <div class='item'>
 	<pre width='auto'>{{answer.body}}</pre>
 	{{answer.rating}}
 </div>
 {% endfor %}
+<div class='container form'>
+	<form action='/answer/' method='POST' id='answer_form'>
+		{% csrf_token %}
+		{{form.as_p}}
+		<a class='important_button' onclick="document.getElementById('answer_form').submit()">{% trans "Answer" %}</a>
+	</form>
+</div>
 {% endblock %}

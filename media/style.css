@@ -151,7 +151,7 @@ input:focus, textarea:focus {
 
 .form {
     margin: 10px;
-    float: right;
+    /*float: right;*/
 }
 
 p.title {

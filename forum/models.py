@@ -1,5 +1,7 @@
 # -*- coding:utf-8 -*-
 
+import datetime
+
 from django.db import models
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
@@ -8,13 +10,18 @@ class question (models.Model):
 	title = models.CharField(_(u'Title'), blank=False, max_length=100)
 	body = models.TextField(_(u'Body'))
 	# sender = models.ForeignKey()
-	rating = models.BigIntegerField(_(u'Rating'), blank=False)
-	view_count = models.BigIntegerField(_(u'View count'), blank=False)
-	answer_count = models.BigIntegerField(_(u'Answer count'), blank=False)
+	rating = models.BigIntegerField(_(u'Rating'), blank=False, default=0)
+	view_count = models.BigIntegerField(_(u'View count'), blank=False, default=0)
+	answer_count = models.BigIntegerField(_(u'Answer count'), blank=False, default=0)
+	date = models.DateField(_(u'Date'), default=datetime.date.today)
 
 	def inc_view (self):
 		self.view_count += 1
 		super(question, self).save()
+
+	def inc_answers (self):
+		self.answer_count += 1
+		super(question, self).save()		
 
 	class Meta:
 		verbose_name = _(u'question')
@@ -23,8 +30,8 @@ class question (models.Model):
 
 class answer (models.Model):
 	question = models.ForeignKey('question', null=False)
-	body = models.TextField(_(u'Body'), blank=False)
-	rating = models.BigIntegerField(_(u'Rating'), blank=False)
+	body = models.TextField(_(u'Answer'), blank=False)
+	rating = models.BigIntegerField(_(u'Rating'), blank=False, default=0)
 
 	class Meta:
 		verbose_name = _(u'answer')
