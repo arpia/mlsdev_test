@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}
+{% trans "Registration" %}
+{% endblock %}
+
+{% block header %}
+<div class='second title'>
+    {% trans "Registration" %}
+</div>
+{% endblock %}
+
+{% block body %}
+<div class='container'>
+<form enctype="multipart/form-data" id='join_form' method='POST'>
+	{% csrf_token %}
+	{{form.as_p}}
+	<a class='important_button' onclick="document.getElementById('join_form').submit()">{% trans "Registration" %}</a>
+</form>
+</div>
+{% endblock %}

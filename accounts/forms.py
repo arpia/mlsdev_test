@@ -8,8 +8,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import authenticate, login
 from django.contrib.admin import widgets
 
-from es.account.models import user_profile
-
 class registration_form (forms.ModelForm):
     username = forms.CharField(label=_(u'Login'), max_length=8)
     password = forms.CharField(label=_(u'Password'), widget=forms.PasswordInput, max_length=8)
@@ -17,8 +15,7 @@ class registration_form (forms.ModelForm):
 
     class Meta:
         model = user_profile
-        exclude = ('user',)
-        fields = ('username', 'password', 'password_again', 'first_name', 'last_name', 'gender', 'date_birth', 'email', 'jabber',)
+        fields = ('username', 'password', 'password_again', 'avatar', 'first_name', 'last_name', 'gender', 'date_birth', 'email', 'jabber',)
 
     def clean (self):
         username = self.cleaned_data.get('username')

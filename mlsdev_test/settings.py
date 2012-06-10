@@ -4,6 +4,8 @@
 
 import os
 
+PROJECT_ROOT = os.path.realpath(os.path.dirname(os.path.dirname(__file__))) #коряво...
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -56,7 +58,7 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -113,7 +115,6 @@ ROOT_URLCONF = 'mlsdev_test.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'mlsdev_test.wsgi.application'
 
-PROJECT_ROOT = os.path.realpath(os.path.dirname(os.path.dirname(__file__))) #коряво...
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_ROOT, 'templates'),
 )
@@ -127,6 +128,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'forum',
+    'accounts',
+    'sorl.thumbnail',
 )
 
 # A sample logging configuration. The only tangible logging
