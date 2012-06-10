@@ -8,6 +8,7 @@ html,body {
 
 form {
      display: inline;
+     position: relative;
 }
 
 a {
@@ -257,6 +258,7 @@ div.subtext {
 }
 
 div.change {
+    text-align: center;
 	left: 0px;
 	position: fixed;
 	margin: 2px;
