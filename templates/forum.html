@@ -19,16 +19,19 @@ Current: {{current_page}}
 	{% for question in questions %}
 	<div class='item'>
 		<div class='rating number'>
-			{{question.rating}}
+			<div class='item-count'>{{question.rating}}</div>
+			<div class='subtext'>{% trans "rating" %}</div>
 		</div>
 		<div class='answer number'>
-			{{question.answer_count}}
+			<div class='item-count'>{{question.answer_count}}</div>
+			<div class='subtext'>{% trans "answers" %}</div>
 		</div>
 		<div class='view number'>
-			{{question.view_count}}
+			<div class='item-count'>{{question.view_count}}</div>
+			<div class='subtext'>{% trans "views" %}</div>
 		</div>
 		<a href='/question/{{question.id}}'>{{question.title}}</a>
-		<div class='sender'>
+		<div class='subtext sender'>
 			Eugene Udovychenko
 			<img src='/media/ava.jpg'/>
 		</div>

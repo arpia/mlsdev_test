@@ -210,12 +210,19 @@ div.item {
     color: #113311;
     padding: 10px;
     position: relative;
+    overflow: hidden;
 }
 
 div.number {
 	display: inline;
 	margin: 2px;
 	font-weight: bold;
+    text-align: center;
+    float:left;
+}
+
+div.item-count {
+    display:block;
 }
 
 div.rating {
@@ -234,7 +241,11 @@ div.view {
 div.sender {
 	float:right;
 	color: #a0afa0;
-	font-size: 12px;
+}
+
+div.subtext {
+    font-size: 12px;
+    display: inline-block;
 }
 
 div.change {
