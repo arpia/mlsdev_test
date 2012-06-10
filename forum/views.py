@@ -5,6 +5,7 @@ from forms import *
 from accounts.models import user_profile
 
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext_lazy as _
 
@@ -102,3 +103,15 @@ def delete_question (request, number=None):
 	question.objects.get(id=number).delete()
 
 	return redirect('forum')
+
+def vote_up (request, number=None):
+	cur_question = question.objects.get(id=number)
+	cur_question.vote(1)
+
+	return HttpResponse(cur_question.rating)
+
+def vote_down (request, number=None):
+	cur_question = question.objects.get(id=number)
+	cur_question.vote(-1)
+
+	return HttpResponse(cur_question.rating)

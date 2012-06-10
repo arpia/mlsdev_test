@@ -28,6 +28,10 @@ class question (models.Model):
 		self.answer_count += 1
 		super(question, self).save()
 
+	def vote (self, change):
+		self.rating += change
+		super(question, self).save()		
+
 	class Meta:
 		verbose_name = _(u'question')
 		verbose_name_plural = _(u'questions')

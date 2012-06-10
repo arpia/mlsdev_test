@@ -6,6 +6,20 @@
 {% endblock %}
 
 {% block header %}
+<script>
+	function vote(change){
+		$.ajax("/question/{{question.id}}/vote/" + change + "/").done(
+			function (data){
+				document.getElementById('question_rating').innerHTML = data;
+			});
+	}
+
+	function addClickHandlers() {
+		$("#vote_up").click( function() { vote("up") });
+		$("#vote_down").click( function() { vote("down") });
+	}
+	$(document).ready(addClickHandlers);
+</script>
 <div class='second title'>
     {{question.title}}
 </div>
@@ -24,19 +38,9 @@
 </div>
 {% endif %}
 <div class='change'>
-	<form id='vote_up' action='.' method='POST'>
-        <input type='hidden' name='vote' value='up'/>
-        <a title='{% trans "Vote up" %}' onclick="document.getElementById('vote_up').submit()">
-            <img src='/media/vote_up.jpg'/>
-        </a>
-    </form>
-	<div>{{question.rating}}</div>
-	<form id='vote_down' action='.' method='POST'>
-        <input type='hidden' name='vote' value='down'/>
-        <a title='{% trans "Vote down" %}' onclick="document.getElementById('vote_down').submit()">
-            <img src='/media/vote_down.jpg'/>
-        </a>
-    </form>
+    <div><img id='vote_up' src='/media/vote_up.jpg'/></div>
+    <div id='question_rating'>{{question.rating}}</div>
+    <div><img id='vote_down' src='/media/vote_down.jpg'/></div>
 </div>
 <div class='container'>
 	<pre width='auto'>{{question.body}}</pre>
