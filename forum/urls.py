@@ -11,7 +11,7 @@ urlpatterns = patterns('',
 
 	url(r'^ask/$', manage_question),
     url(r'^edit/(?P<number>\d{1,3})$', manage_question),
-    # url(r'^delete/(?P<number>\d{1,2})$', delete_question),
+    url(r'^delete/(?P<number>\d{1,3})$', delete_question),
 
 	url(r'^answer/$', add_answer),
 	)

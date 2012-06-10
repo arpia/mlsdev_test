@@ -64,7 +64,7 @@ def manage_question (request, number=None):
 
         try:
             question.objects.get(id=number)
-        except (question.DoesNotExist):
+        except question.DoesNotExist:
             return redirect('forum')
 
         form = question_form(request.POST or None, instance=question.objects.get(id=number))
@@ -84,3 +84,15 @@ def manage_question (request, number=None):
         'form':form,
         'type':form_type
         })
+
+@login_required
+def delete_question (request, number=None):
+	number = int(number)
+	try:
+		question.objects.get(id=number)
+	except question.DoesNotExist:
+		return redirect('forum')
+	
+	question.objects.get(id=number).delete()
+
+	return redirect('forum')
