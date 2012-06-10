@@ -12,9 +12,9 @@
 {% endblock %}
 
 {% block body %}
-Total: {{total_pages}}
-<br/>
-Current: {{current_page}}
+<a href='/ask/' class='important_button' title='{% trans "Ask" %}'>
+	{% trans "Ask" %}
+</a>
 <div class='container'>
 	{% for question in questions %}
 	<div class='item'>
@@ -38,4 +38,8 @@ Current: {{current_page}}
 	</div>
 	{% endfor %}
 </div>
+
+Total: {{total_pages}}
+<br/>
+Current: {{current_page}}
 {% endblock %}

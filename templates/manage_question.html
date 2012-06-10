@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}
+{{type}} {% trans "question" %}
+{% endblock %}
+
+{% block header %}
+<form id='question_form' method='POST'>
+	{% csrf_token %}
+	<div class='second title'>
+	    {% trans "Title" %}:
+	    {{form.title}}
+	    <a class='important_button' onclick="document.getElementById('question_form').submit()">{{type}}</a>
+	</div>
+{% endblock %}
+
+{% block body %}
+	{{form.errors}}
+	{{form.body}}
+</form>
+{% endblock %}

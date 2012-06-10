@@ -73,17 +73,15 @@ def manage_question (request, number=None):
                 form.save()
                 return redirect('forum') #change to redirect for newly added question
         else:
-            form = lesson_form(instance=text_lesson.objects.get(id=number))
+            form = question_form(instance=question.objects.get(id=number))
     else:
-        form_type = _(u'Add')
-        form = lesson_form(request.POST or None)
+        form_type = _(u'Ask')
+        form = question_form(request.POST or None)
         if form.is_valid():
             form.save()
-            return redirect('lessons_index')        
+            return redirect('forum')        
     
-    return render_to_response('manage_lesson.html', {
+    return render(request, 'manage_question.html', {
         'form':form,
-        'type':form_type,
-        'user':request.user,
-        'csrfmiddlewaretoken':csrf_token(RequestContext(request))
+        'type':form_type
         })
