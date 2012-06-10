@@ -12,6 +12,15 @@
 {% endblock %}
 
 {% block body %}
+<div class='buttons'>
+	<a href='/edit/{{question.id}}' class='button' title='{% trans "Edit question" %}'>
+		<img src='/media/edit.png'/>
+	</a>
+	<br/>
+	<a href='/delete/{{question.id}}' class='button' title='{% trans "Delete question" %}'>
+		<img src='/media/delete.png'/>
+	</a>
+</div>
 <div class='change'>
 	<form id='vote_up' action='.' method='POST'>
         <input type='hidden' name='vote' value='up'/>

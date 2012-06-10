@@ -67,20 +67,16 @@ def manage_question (request, number=None):
         except (question.DoesNotExist):
             return redirect('forum')
 
-        if request.method == 'POST':
-            form = question_form(request.POST)
-
-            if form.is_valid():
-                form.save()
-                return redirect('forum') #change to redirect for newly added question
-        else:
-            form = question_form(instance=question.objects.get(id=number))
+        form = question_form(request.POST or None, instance=question.objects.get(id=number))
+        if form.is_valid():
+        	form.save()
+        	return redirect('forum') #change to redirect for newly edited question
     else:
         form_type = _(u'Ask')
         form = question_form(request.POST or None)
         if form.is_valid():
             form.save()
-            return redirect('forum')
+            return redirect('forum') #change to redirect for newly added question
 
         form = question_form(initial={'sender':user_profile.objects.get(username=request.user.username)})
     

@@ -17,7 +17,7 @@ class answer_form (forms.ModelForm):
 class question_form (forms.ModelForm):
     class Meta:
         model = question
-        fields = ('title', 'body', 'sender' )
+        fields = ('title', 'body', 'sender', )
         widgets = {
 			'sender': forms.HiddenInput()
 		}
