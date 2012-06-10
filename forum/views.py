@@ -2,6 +2,7 @@
 
 from models import *
 from forms import *
+from accounts.models import user_profile
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -79,7 +80,9 @@ def manage_question (request, number=None):
         form = question_form(request.POST or None)
         if form.is_valid():
             form.save()
-            return redirect('forum')        
+            return redirect('forum')
+
+        form = question_form(initial={'sender':user_profile.objects.get(username=request.user.username)})
     
     return render(request, 'manage_question.html', {
         'form':form,

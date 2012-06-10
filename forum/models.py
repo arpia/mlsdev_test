@@ -9,7 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 class question (models.Model):
 	title = models.CharField(_(u'Title'), blank=False, max_length=100)
 	body = models.TextField(_(u'Body'))
-	# sender = models.ForeignKey()
+	sender = models.ForeignKey('accounts.user_profile', null=False)
 	rating = models.BigIntegerField(_(u'Rating'), blank=False, default=0)
 	view_count = models.BigIntegerField(_(u'View count'), blank=False, default=0)
 	answer_count = models.BigIntegerField(_(u'Answer count'), blank=False, default=0)
