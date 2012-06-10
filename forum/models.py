@@ -15,13 +15,18 @@ class question (models.Model):
 	answer_count = models.BigIntegerField(_(u'Answer count'), blank=False, default=0)
 	date = models.DateField(_(u'Date'), default=datetime.date.today)
 
+	def delete(self):
+		for answer in self.answer_set.all():
+			answer.delete()
+		super(question, self).delete()
+
 	def inc_view (self):
 		self.view_count += 1
 		super(question, self).save()
 
 	def inc_answers (self):
 		self.answer_count += 1
-		super(question, self).save()		
+		super(question, self).save()
 
 	class Meta:
 		verbose_name = _(u'question')
