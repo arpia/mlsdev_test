@@ -36,7 +36,13 @@ def one_question (request, number=1):
 
 	answers = cur_question.answer_set.order_by('-rating')
 
-	form = answer_form(initial={'question':number})
+	if request.user.is_authenticated:
+		form = answer_form(initial={
+			'question':number,
+			'sender':user_profile.objects.get(username=request.user.username)
+			})
+	else:
+		form = None
 
 	return render(request, 'question.html', {
 		'question':cur_question,
@@ -103,15 +109,3 @@ def delete_question (request, number=None):
 	question.objects.get(id=number).delete()
 
 	return redirect('forum')
-
-def vote_up (request, number=None):
-	cur_question = question.objects.get(id=number)
-	cur_question.vote(1)
-
-	return HttpResponse(cur_question.rating)
-
-def vote_down (request, number=None):
-	cur_question = question.objects.get(id=number)
-	cur_question.vote(-1)
-
-	return HttpResponse(cur_question.rating)

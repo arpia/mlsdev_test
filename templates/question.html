@@ -7,18 +7,18 @@
 
 {% block header %}
 <script>
-	function vote(change){
-		$.ajax("/question/{{question.id}}/vote/" + change + "/").done(
+	function vote_question(change){
+		$.ajax("/vote/question/{{question.id}}/" + change + "/").done(
 			function (data){
 				document.getElementById('question_rating').innerHTML = data;
 			});
 	}
-
-	function addClickHandlers() {
-		$("#vote_up").click( function() { vote("up") });
-		$("#vote_down").click( function() { vote("down") });
+	function vote_answer(answer, change){
+		$.ajax('/vote/answer/' + answer + '/' + change + '/').done(
+			function (data){
+				document.getElementById('answer_rating_' + answer).innerHTML = data;
+			});
 	}
-	$(document).ready(addClickHandlers);
 </script>
 <div class='second title'>
     {{question.title}}
@@ -37,18 +37,28 @@
 	</a>
 </div>
 {% endif %}
-<div class='change'>
-    <div><img id='vote_up' src='/media/vote_up.jpg'/></div>
+<div class='question_rating'>
+    <div><img id='vote_up' onclick='vote_question("up")' src='/media/vote_up.jpg'/></div>
     <div id='question_rating'>{{question.rating}}</div>
-    <div><img id='vote_down' src='/media/vote_down.jpg'/></div>
+    <div><img id='vote_down' onclick='vote_question("down")' src='/media/vote_down.jpg'/></div>
 </div>
 <div class='container'>
 	<pre width='auto'>{{question.body}}</pre>
 </div>
 {% for answer in answers %}
 <div class='item'>
+	<div class='subtext answer_rating'>
+		<a class='answer_rating_change' onclick='vote_answer("{{answer.id}}", "down")'>-</a>
+		<div id='answer_rating_{{answer.id}}'>{{answer.rating}}</div>
+		<a class='answer_rating_change' onclick='vote_answer("{{answer.id}}", "up")'>+</a>
+	</div>
+	<div class='subtext sender'>
+		{{answer.sender}}
+		{% if answer.sender.get_full_name %}
+		({{answer.sender.get_full_name}})
+		{% endif %}
+	</div>
 	<pre width='auto'>{{answer.body}}</pre>
-	{{answer.rating}}
 </div>
 {% endfor %}
 {% if user.is_authenticated %}

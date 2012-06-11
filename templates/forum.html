@@ -34,7 +34,10 @@
 		</div>
 		<a href='/question/{{question.id}}'>{{question.title}}</a>
 		<div class='subtext sender'>
-			{{question.sender.get_full_name}} ({{question.sender}})
+			{{question.sender}}
+			{% if question.sender.get_full_name %}
+			({{question.sender.get_full_name}})
+			{% endif %}
 			<img class='ava_small' src='/media/{{question.sender.avatar}}'/>
 		</div>
 	</div>

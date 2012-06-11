@@ -10,7 +10,8 @@ class answer_form (forms.ModelForm):
 		model = answer
 		exclude = ('rating', )
 		widgets = {
-			'question': forms.HiddenInput()
+			'question': forms.HiddenInput(),
+			'sender': forms.HiddenInput()
 		}
 
 

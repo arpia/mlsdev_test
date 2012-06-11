@@ -32,7 +32,7 @@ class question (models.Model):
 
 	def vote (self, change):
 		self.rating += change
-		super(question, self).save()		
+		super(question, self).save()
 
 	class Meta:
 		verbose_name = _(u'question')
@@ -42,7 +42,12 @@ class question (models.Model):
 class answer (models.Model):
 	question = models.ForeignKey(question, null=False)
 	body = models.TextField(_(u'Answer'), blank=False)
+	sender = models.ForeignKey(user_profile, null=False)
 	rating = models.BigIntegerField(_(u'Rating'), blank=False, default=0)
+
+	def vote (self, change):
+		self.rating += change
+		super(question, self).save()
 
 	class Meta:
 		verbose_name = _(u'answer')

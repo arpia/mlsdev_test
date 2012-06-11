@@ -6,9 +6,6 @@ urlpatterns = patterns('',
 	url(r'^$', forum, name='forum'),
 	url(r'^(?P<number>\d+)/$', forum),
 
-	url(r'^question/(?P<number>\d+)/vote/up/$', vote_up),
-	url(r'^question/(?P<number>\d+)/vote/down/$', vote_down),
-
 	url(r'^question/$', one_question),
 	url(r'^question/(?P<number>\d+)/', one_question),
 
