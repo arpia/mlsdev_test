@@ -16,8 +16,18 @@
 {% endblock %}
 
 {% block body %}
+	<!-- Не нравится мне такой вывод формы... -->
 	{{form.errors}}
-	{{form.body}}
+	<p>{{form.body}}</p>
+	<p>
+		<label for="id_tags">{% trans "Tags" %}</label>
+		{{form.tags}}
+	</p>
 	{{form.sender}}
 </form>
+<p>
+	<label for="id_tags">{% trans "Add tag" %}</label>
+	<input id='new_tag'/>
+	<a href='add_tag'><img src='/media/add_tag.gif'/></a>
+</p>
 {% endblock %}

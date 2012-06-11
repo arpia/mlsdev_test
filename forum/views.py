@@ -31,7 +31,10 @@ def forum (request, number=1):
 		})
 
 def one_question (request, number=1):
-	cur_question = question.objects.get(id=number)
+	try:
+		cur_question = question.objects.get(id=number)
+	except question.DoesNotExist:
+		return redirect('forum')
 	cur_question.inc_view()
 
 	answers = cur_question.answer_set.order_by('-rating')
@@ -107,3 +110,12 @@ def delete_question (request, number=None):
 	question.objects.get(id=number).delete()
 
 	return redirect('forum')
+
+@login_required
+def add_tag (request, tag_title):
+	try:
+		tag.objects.get(title=tag_title)
+	except tag.DoesNotExist:
+		new_tag = tag(title=tag_title)
+		new_tag.save()
+		return HttpResponse(new_tag)

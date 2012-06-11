@@ -9,6 +9,21 @@ from django.db import models
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
+class tag (models.Model):
+	title = models.CharField(_('Title'), blank=False, max_length=10)
+	count = models.IntegerField(blank=False, default=0)
+
+	def __unicode__ (self):
+		return self.title
+
+	def change_count (self, change):
+		self.count += change
+		super(tag, self).save()
+
+	class Meta:
+		verbose_name = _(u'tag')
+		verbose_name_plural = _(u'tags')
+
 class question (models.Model):
 	title = models.CharField(_(u'Title'), blank=False, max_length=100)
 	body = models.TextField(_(u'Body'))
@@ -17,6 +32,8 @@ class question (models.Model):
 	view_count = models.BigIntegerField(_(u'View count'), blank=False, default=0)
 	answer_count = models.BigIntegerField(_(u'Answer count'), blank=False, default=0)
 	date = models.DateField(_(u'Date'), default=datetime.date.today)
+
+	tags = models.ManyToManyField(tag, null=True, blank=True)
 
 	def delete(self):
 		for answer in self.answer_set.all():
@@ -48,7 +65,7 @@ class question (models.Model):
 
 class answer (models.Model):
 	question = models.ForeignKey(question, null=False)
-	body = models.TextField(_(u'Answer'), blank=False)
+	answer_body = models.TextField(_(u'Answer'), blank=False)
 	sender = models.ForeignKey(user_profile, null=False)
 	rating = models.BigIntegerField(_(u'Rating'), blank=False, default=0)
 
@@ -68,20 +85,6 @@ class comment (models.Model):
 	class Meta:
 		verbose_name = _(u'comment')
 		verbose_name_plural = _(u'comments')
-
-
-class tag (models.Model):
-	question = models.ManyToManyField(question)
-	title = models.CharField(_('Title'), blank=False, max_length=10)
-	count = models.IntegerField(blank=False, default=0)
-
-	def change_count (self, change):
-		self.count += change
-		super(tag, self).save()
-
-	class Meta:
-		verbose_name = _(u'tag')
-		verbose_name_plural = _(u'tags')
 
 
 

@@ -18,7 +18,8 @@ class answer_form (forms.ModelForm):
 class question_form (forms.ModelForm):
     class Meta:
         model = question
-        fields = ('title', 'body', 'sender', )
+        fields = ('title', 'body', 'sender', 'tags', )
         widgets = {
-			'sender': forms.HiddenInput()
+			'sender': forms.HiddenInput(),
+			# 'tags': forms.CheckboxSelectMultiple()
 		}

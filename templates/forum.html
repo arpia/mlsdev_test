@@ -34,7 +34,7 @@
 		</div>
 		<div><a href='/question/{{question.id}}'>{{question.title}}</a></div>
 		<div class='tags'>
-			{% for tag in question.tag_set.all %}
+			{% for tag in question.tags.all %}
 			<div class='tag'>{{tag.title}}</div>
 			{% endfor %}
 		</div>
