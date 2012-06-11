@@ -3,6 +3,7 @@
 import datetime
 
 from accounts.models import user_profile
+from voting.models import *
 
 from django.db import models
 from django.contrib import admin
@@ -19,7 +20,11 @@ class question (models.Model):
 
 	def delete(self):
 		for answer in self.answer_set.all():
+			for vote in answer.answer_voting_set.all():
+				vote.delete()
 			answer.delete()
+		for vote in self.question_voting_set.all():
+			vote.delete()
 		super(question, self).delete()
 
 	def inc_view (self):
@@ -47,7 +52,7 @@ class answer (models.Model):
 
 	def vote (self, change):
 		self.rating += change
-		super(question, self).save()
+		super(answer, self).save()
 
 	class Meta:
 		verbose_name = _(u'answer')

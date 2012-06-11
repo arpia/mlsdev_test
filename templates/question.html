@@ -37,21 +37,29 @@
 	</a>
 </div>
 {% endif %}
+{% if user.is_authenticated %}
 <div class='question_rating'>
-    <div><img id='vote_up' onclick='vote_question("up")' src='/media/vote_up.jpg'/></div>
+    <div class='question_rating_button'><img id='vote_up' onclick='vote_question("up")' src='/media/vote_up.jpg'/></div>
     <div id='question_rating'>{{question.rating}}</div>
-    <div><img id='vote_down' onclick='vote_question("down")' src='/media/vote_down.jpg'/></div>
+    <div class='question_rating_button'><img id='vote_down' onclick='vote_question("down")' src='/media/vote_down.jpg'/></div>
 </div>
+{% endif %}
 <div class='container'>
 	<pre width='auto'>{{question.body}}</pre>
 </div>
 {% for answer in answers %}
 <div class='item'>
+	{% if user.is_authenticated %}
 	<div class='subtext answer_rating'>
-		<a class='answer_rating_change' onclick='vote_answer("{{answer.id}}", "down")'>-</a>
-		<div id='answer_rating_{{answer.id}}'>{{answer.rating}}</div>
-		<a class='answer_rating_change' onclick='vote_answer("{{answer.id}}", "up")'>+</a>
+		<a class='answer_rating_button' onclick='vote_answer("{{answer.id}}", "down")'>-</a>
+		<div class='answer_rating' id='answer_rating_{{answer.id}}'>{{answer.rating}}</div>
+		<a class='answer_rating_button' onclick='vote_answer("{{answer.id}}", "up")'>+</a>
 	</div>
+	{% else %}
+	<div class='subtext answer_rating'>
+		<div class='answer_rating' id='answer_rating_{{answer.id}}'>{% trans "Rating" %}: {{answer.rating}}</div>
+	</div>
+	{% endif %}
 	<div class='subtext sender'>
 		{{answer.sender}}
 		{% if answer.sender.get_full_name %}

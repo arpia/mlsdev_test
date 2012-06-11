@@ -36,7 +36,7 @@ def one_question (request, number=1):
 
 	answers = cur_question.answer_set.order_by('-rating')
 
-	if request.user.is_authenticated:
+	if request.user.is_authenticated():
 		form = answer_form(initial={
 			'question':number,
 			'sender':user_profile.objects.get(username=request.user.username)
