@@ -25,6 +25,8 @@ class question (models.Model):
 			answer.delete()
 		for vote in self.question_voting_set.all():
 			vote.delete()
+		for tag in self.tag_set.all():
+			tag.change_count(-1)
 		super(question, self).delete()
 
 	def inc_view (self):
@@ -69,8 +71,13 @@ class comment (models.Model):
 
 
 class tag (models.Model):
-	# question = models,ManyToManyField()
+	question = models.ManyToManyField(question)
 	title = models.CharField(_('Title'), blank=False, max_length=10)
+	count = models.IntegerField(blank=False, default=0)
+
+	def change_count (self, change):
+		self.count += change
+		super(tag, self).save()
 
 	class Meta:
 		verbose_name = _(u'tag')

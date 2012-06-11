@@ -32,7 +32,12 @@
 			<div class='item-count'>{{question.view_count}}</div>
 			<div class='subtext'>{% trans "views" %}</div>
 		</div>
-		<a href='/question/{{question.id}}'>{{question.title}}</a>
+		<div><a href='/question/{{question.id}}'>{{question.title}}</a></div>
+		<div class='tags'>
+			{% for tag in question.tag_set.all %}
+			<div class='tag'>{{tag.title}}</div>
+			{% endfor %}
+		</div>
 		<div class='subtext sender'>
 			{{question.sender}}
 			{% if question.sender.get_full_name %}

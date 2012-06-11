@@ -262,6 +262,7 @@ div.view {
 
 div.sender {
 	float:right;
+    display: block;
 	color: #a0afa0;
 }
 
@@ -293,4 +294,19 @@ div.question_rating_button {
 
 div.answer_rating {
     display: inline;
+}
+
+div.tags {
+    display: inline-block;
+}
+
+div.tag {
+    border-radius: 2px;
+    display: inline-block;
+    padding: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+    background: #b1d3b1;
+    color: #000000;
+    font-size: 11px;
 }
