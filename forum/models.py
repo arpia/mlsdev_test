@@ -2,6 +2,8 @@
 
 import datetime
 
+from accounts.models import user_profile
+
 from django.db import models
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
@@ -9,7 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 class question (models.Model):
 	title = models.CharField(_(u'Title'), blank=False, max_length=100)
 	body = models.TextField(_(u'Body'))
-	sender = models.ForeignKey('accounts.user_profile', null=False)
+	sender = models.ForeignKey(user_profile, null=False)
 	rating = models.BigIntegerField(_(u'Rating'), blank=False, default=0)
 	view_count = models.BigIntegerField(_(u'View count'), blank=False, default=0)
 	answer_count = models.BigIntegerField(_(u'Answer count'), blank=False, default=0)
@@ -38,7 +40,7 @@ class question (models.Model):
 
 
 class answer (models.Model):
-	question = models.ForeignKey('question', null=False)
+	question = models.ForeignKey(question, null=False)
 	body = models.TextField(_(u'Answer'), blank=False)
 	rating = models.BigIntegerField(_(u'Rating'), blank=False, default=0)
 
@@ -48,7 +50,7 @@ class answer (models.Model):
 
 
 class comment (models.Model):
-	answer = models.ForeignKey('answer', null=False)
+	answer = models.ForeignKey(answer, null=False)
 	body = models.TextField(_(u'Body'), null=False)
 
 	class Meta:

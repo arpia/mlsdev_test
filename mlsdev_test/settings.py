@@ -129,6 +129,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'forum',
     'accounts',
+    'voting',
     'sorl.thumbnail',
     'captcha',
 )
