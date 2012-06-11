@@ -1,0 +1,21 @@
+{% load i18n %}
+<div class='item'>
+	{% if user.is_authenticated %}
+	<div class='subtext answer_rating'>
+		<a class='answer_rating_button' onclick='vote_answer("{{answer.id}}", "down")'>-</a>
+		<div class='answer_rating' id='answer_rating_{{answer.id}}'>{{answer.rating}}</div>
+		<a class='answer_rating_button' onclick='vote_answer("{{answer.id}}", "up")'>+</a>
+	</div>
+	{% else %}
+	<div class='subtext answer_rating'>
+		<div class='answer_rating' id='answer_rating_{{answer.id}}'>{% trans "Rating" %}: {{answer.rating}}</div>
+	</div>
+	{% endif %}
+	<div class='subtext sender'>
+		{{answer.sender}}
+		{% if answer.sender.get_full_name %}
+		({{answer.sender.get_full_name}})
+		{% endif %}
+	</div>
+	<pre width='auto'>{{answer.body}}</pre>
+</div>

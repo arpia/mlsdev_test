@@ -7,17 +7,31 @@
 
 {% block header %}
 <script>
-	function vote_question(change){
+	// Прикольно, можно еще короче и понятнее
+	function vote_question (change){
 		$.ajax("/vote/question/{{question.id}}/" + change + "/").done(
 			function (data){
 				document.getElementById('question_rating').innerHTML = data;
 			});
 	}
-	function vote_answer(answer, change){
+
+	function vote_answer (answer, change){
 		$.ajax('/vote/answer/' + answer + '/' + change + '/').done(
 			function (data){
 				document.getElementById('answer_rating_' + answer).innerHTML = data;
 			});
+	}
+
+	function add_answer (){
+		$.ajax({
+			type:'POST',
+			url:'/answer/',
+			data:$('#answer_form').serialize(),
+			success:function (data){ 
+				document.getElementById('answers').innerHTML += data;
+				document.getElementById('id_body').value = '';
+			}
+		});
 	}
 </script>
 <div class='second title'>
@@ -47,34 +61,36 @@
 <div class='container'>
 	<pre width='auto'>{{question.body}}</pre>
 </div>
-{% for answer in answers %}
-<div class='item'>
-	{% if user.is_authenticated %}
-	<div class='subtext answer_rating'>
-		<a class='answer_rating_button' onclick='vote_answer("{{answer.id}}", "down")'>-</a>
-		<div class='answer_rating' id='answer_rating_{{answer.id}}'>{{answer.rating}}</div>
-		<a class='answer_rating_button' onclick='vote_answer("{{answer.id}}", "up")'>+</a>
-	</div>
-	{% else %}
-	<div class='subtext answer_rating'>
-		<div class='answer_rating' id='answer_rating_{{answer.id}}'>{% trans "Rating" %}: {{answer.rating}}</div>
-	</div>
-	{% endif %}
-	<div class='subtext sender'>
-		{{answer.sender}}
-		{% if answer.sender.get_full_name %}
-		({{answer.sender.get_full_name}})
+<div id='answers'>
+	{% for answer in answers %}
+	<div class='item'>
+		{% if user.is_authenticated %}
+		<div class='subtext answer_rating'>
+			<a class='answer_rating_button' onclick='vote_answer("{{answer.id}}", "down")'>-</a>
+			<div class='answer_rating' id='answer_rating_{{answer.id}}'>{{answer.rating}}</div>
+			<a class='answer_rating_button' onclick='vote_answer("{{answer.id}}", "up")'>+</a>
+		</div>
+		{% else %}
+		<div class='subtext answer_rating'>
+			<div class='answer_rating' id='answer_rating_{{answer.id}}'>{% trans "Rating" %}: {{answer.rating}}</div>
+		</div>
 		{% endif %}
+		<div class='subtext sender'>
+			{{answer.sender}}
+			{% if answer.sender.get_full_name %}
+			({{answer.sender.get_full_name}})
+			{% endif %}
+		</div>
+		<pre width='auto'>{{answer.body}}</pre>
 	</div>
-	<pre width='auto'>{{answer.body}}</pre>
+	{% endfor %}
 </div>
-{% endfor %}
 {% if user.is_authenticated %}
 <div class='container form'>
 	<form action='/answer/' method='POST' id='answer_form'>
 		{% csrf_token %}
 		{{form.as_p}}
-		<a class='important_button' onclick="document.getElementById('answer_form').submit()">{% trans "Answer" %}</a>
+		<a class='important_button' onclick="add_answer()">{% trans "Answer" %}</a>
 	</form>
 </div>
 {% endif %}

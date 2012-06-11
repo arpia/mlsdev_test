@@ -54,14 +54,12 @@ def one_question (request, number=1):
 def add_answer (request):
 	form = answer_form(request.POST or None)
 	if form.is_valid():
-		form.save()
+		new_answer = form.save()
 		question.objects.get(id=request.POST.get('question')).inc_answers()
 
-	next = '/'
-	if request.POST.get('question'):
-		next = '/question/' + request.POST.get('question')
-
-	return redirect(next)
+		return render(request, 'answer.html',{
+			'answer':new_answer
+			})
 
 @login_required
 def manage_question (request, number=None):

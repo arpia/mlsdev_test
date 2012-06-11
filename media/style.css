@@ -148,6 +148,10 @@ input, textarea {
     font-size: 16px;
 }
 
+textarea {
+    rows: 10;
+}
+
 input:focus, textarea:focus {
     border: 1px solid #e08c00;
 }
@@ -166,6 +170,7 @@ input:focus, textarea:focus {
 .form {
     margin: 10px;
     /*float: right;*/
+    display: inline-block;
 }
 
 p.title {

@@ -13,7 +13,7 @@ GENDER_CHOICES = (
 )
 
 class user_profile (User):
-    date_birth = models.DateField(_(u'Birth date'), blank=True)
+    date_birth = models.DateField(_(u'Birth date'), blank=True, null=True)
     gender = models.CharField(_(u'Sex'), max_length=1, choices=GENDER_CHOICES, blank=True)
     jabber = models.CharField(u'jabber', max_length=30, blank=True)
     avatar = ImageField(_(u'Avatar'), upload_to='avatars', blank=True, default='no_ava.png')
