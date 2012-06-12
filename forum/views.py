@@ -9,14 +9,17 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext_lazy as _
 
-def forum (request, number=1):
+def forum (request, number=1, bytag=None):
 	questions_per_page = 10
 
 	number = int(number)
 	first_question = (number - 1)*questions_per_page
 	last_question = number*questions_per_page
 
-	questions = question.objects.order_by('-date')[first_question:last_question]
+	if bytag:
+		questions = question.objects.filter(tags__title=bytag).order_by('-date')[first_question:last_question]
+	else:
+		questions = question.objects.order_by('-date')[first_question:last_question]
 	tags = tag.objects.order_by('-count')
 
 	question_count = question.objects.all().count()

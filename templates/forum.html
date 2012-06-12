@@ -36,7 +36,7 @@
 			<div><a href='/question/{{question.id}}'>{{question.title}}</a></div>
 			<div class='tags'>
 				{% for tag in question.tags.all %}
-					<div class='tag'>{{tag.title}}</div>
+					<a href='/{{tag.title}}'><div class='tag'>{{tag.title}}</div></a>
 				{% endfor %}
 			</div>
 			<div class='subtext sender'>
@@ -49,10 +49,11 @@
 		</div>
 		{% endfor %}
 	</div>
-	<div class='container' style='float:right;'>
+	<div class='taglist'>
+		<p class='subtitle'>{% trans "Tags" %}</p>
 		{% for tag in tags %}
 			{% if tag.count > 0 %}
-				<div class='tag'>{{tag.title}}</div>x{{tag.count}}<br/>
+				<a href='/{{tag.title}}'><div class='tag'>{{tag.title}}</div></a> x{{tag.count}}<br/>
 			{% endif %}
 		{% endfor %}
 	</div>

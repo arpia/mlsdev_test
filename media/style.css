@@ -312,6 +312,7 @@ div.tag {
     background: #b1d3b1;
     color: #000000;
     font-size: 11px;
+    text-decoration: none;
 }
 
 select {
@@ -327,5 +328,9 @@ select {
 
 div.forum {
     display: inline-block;
-    width: 720px;
+    width: 700px;
+}
+
+div.taglist {
+    float:right;
 }
