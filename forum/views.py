@@ -118,4 +118,4 @@ def add_tag (request, tag_title):
 	except tag.DoesNotExist:
 		new_tag = tag(title=tag_title)
 		new_tag.save()
-		return HttpResponse(new_tag)
+		return HttpResponse(new_tag.id)

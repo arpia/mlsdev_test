@@ -6,6 +6,24 @@
 {% endblock %}
 
 {% block header %}
+<script>
+	function add_tag (answer, change){
+		$.ajax('/addtag/' + document.getElementById('new_tag').value + '/').done(
+			function (data){
+				if ( data != '' ){
+					var objSel = document.getElementById('id_tags');
+					objSel.options[objSel.options.length] = new Option(
+						document.getElementById('new_tag').value,
+						data,
+						0,
+						1
+						);
+					document.getElementById('new_tag').value = '';
+				}
+			});
+	}
+</script>
+
 <form id='question_form' method='POST'>
 	{% csrf_token %}
 	<div class='second title'>
@@ -26,8 +44,7 @@
 	{{form.sender}}
 </form>
 <p>
-	<label for="id_tags">{% trans "Add tag" %}</label>
 	<input id='new_tag'/>
-	<a href='add_tag'><img src='/media/add_tag.gif'/></a>
+	<img src='/media/add_tag.gif' onclick='add_tag()'/>
 </p>
 {% endblock %}

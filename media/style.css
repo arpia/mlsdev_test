@@ -310,3 +310,15 @@ div.tag {
     color: #000000;
     font-size: 11px;
 }
+
+select {
+    width: 200px;
+    height: 100px;
+    font-size: 16px;
+    border: 1px solid #e0efe0;
+    border-radius: 3px;
+    background: white;
+    color: #113311;
+    font-family: Sans;
+    font-size: 16px;
+}
