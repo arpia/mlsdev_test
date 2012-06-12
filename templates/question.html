@@ -61,6 +61,11 @@
 {% endif %}
 <div class='container'>
 	<pre width='auto'>{{question.body}}</pre>
+	<div class='tags'>
+		{% for tag in question.tags.all %}
+		<div class='tag'>{{tag.title}}</div>
+		{% endfor %}
+	</div>
 </div>
 <div id='answers'>
 	{% for answer in answers %}

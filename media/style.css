@@ -156,6 +156,10 @@ input:focus, textarea:focus {
     border: 1px solid #e08c00;
 }
 
+div.main {
+    width: 100%;
+}
+
 .container {
     padding: 20px;
     padding-top: 5px;
@@ -169,7 +173,6 @@ input:focus, textarea:focus {
 
 .form {
     margin: 10px;
-    /*float: right;*/
     display: inline-block;
 }
 
@@ -313,7 +316,6 @@ div.tag {
 
 select {
     width: 200px;
-    height: 100px;
     font-size: 16px;
     border: 1px solid #e0efe0;
     border-radius: 3px;
@@ -321,4 +323,9 @@ select {
     color: #113311;
     font-family: Sans;
     font-size: 16px;
+}
+
+div.forum {
+    display: inline-block;
+    width: 720px;
 }

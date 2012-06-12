@@ -9,23 +9,8 @@ from django.db import models
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
-class tag (models.Model):
-	title = models.CharField(_('Title'), blank=False, max_length=10)
-	count = models.IntegerField(blank=False, default=0)
-
-	def __unicode__ (self):
-		return self.title
-
-	def change_count (self, change):
-		self.count += change
-		super(tag, self).save()
-
-	class Meta:
-		verbose_name = _(u'tag')
-		verbose_name_plural = _(u'tags')
-
 class question (models.Model):
-	title = models.CharField(_(u'Title'), blank=False, max_length=100)
+	title = models.CharField(_(u'Title'), blank=False, max_length=50)
 	body = models.TextField(_(u'Body'))
 	sender = models.ForeignKey(user_profile, null=False)
 	rating = models.BigIntegerField(_(u'Rating'), blank=False, default=0)
@@ -33,7 +18,7 @@ class question (models.Model):
 	answer_count = models.BigIntegerField(_(u'Answer count'), blank=False, default=0)
 	date = models.DateField(_(u'Date'), default=datetime.date.today)
 
-	tags = models.ManyToManyField(tag, null=True, blank=True)
+	tags = models.ManyToManyField('tag', null=True, blank=True)
 
 	def delete(self):
 		for answer in self.answer_set.all():
@@ -42,8 +27,8 @@ class question (models.Model):
 			answer.delete()
 		for vote in self.question_voting_set.all():
 			vote.delete()
-		for tag in self.tag_set.all():
-			tag.change_count(-1)
+		for tag in self.tags.all():
+			tag.dec()
 		super(question, self).delete()
 
 	def inc_view (self):
@@ -85,6 +70,26 @@ class comment (models.Model):
 	class Meta:
 		verbose_name = _(u'comment')
 		verbose_name_plural = _(u'comments')
+
+
+class tag (models.Model):
+	title = models.CharField(_('Title'), blank=False, max_length=10, unique=True)
+	count = models.IntegerField(blank=False, default=0)
+
+	def __unicode__ (self):
+		return self.title
+
+	def set_count (self, change):
+		self.count = change
+		super(tag, self).save()
+
+	def dec (self):
+		self.count -= 1
+		super(tag, self).save()
+
+	class Meta:
+		verbose_name = _(u'tag')
+		verbose_name_plural = _(u'tags')
 
 
 

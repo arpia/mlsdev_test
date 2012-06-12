@@ -17,6 +17,7 @@ def forum (request, number=1):
 	last_question = number*questions_per_page
 
 	questions = question.objects.order_by('-date')[first_question:last_question]
+	tags = tag.objects.order_by('-count')
 
 	question_count = question.objects.all().count()
 	current_page = number
@@ -27,7 +28,8 @@ def forum (request, number=1):
 	return render(request, 'forum.html', {
 		'questions':questions,
 		'current_page':current_page,
-		'total_pages':total_pages
+		'total_pages':total_pages,
+		'tags':tags
 		})
 
 def one_question (request, number=1):
@@ -80,13 +82,15 @@ def manage_question (request, number=None):
 
         form = question_form(request.POST or None, instance=question.objects.get(id=number))
         if form.is_valid():
-        	form.save()
+        	saved = form.save()
+        	refresh_tags(saved.tags.all()) #very bad...
         	return redirect('forum') #change to redirect for newly edited question
     else:
         form_type = _(u'Ask')
         form = question_form(request.POST or None)
         if form.is_valid():
-            form.save()
+            saved = form.save()
+            refresh_tags(saved.tags.all()) #very bad...
             return redirect('forum') #change to redirect for newly added question
 
         form = question_form(initial={'sender':user_profile.objects.get(username=request.user.username)})
@@ -119,3 +123,8 @@ def add_tag (request, tag_title):
 		new_tag = tag(title=tag_title)
 		new_tag.save()
 		return HttpResponse(new_tag.id)
+
+
+def refresh_tags (tags):
+	for tag in tags:
+		tag.set_count(tag.question_set.count())

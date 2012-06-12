@@ -17,39 +17,48 @@
 	{% trans "Ask" %}
 </a>
 {% endif %}
-<div class='container'>
-	{% for question in questions %}
-	<div class='item'>
-		<div class='rating number'>
-			<div class='item-count'>{{question.rating}}</div>
-			<div class='subtext'>{% trans "rating" %}</div>
+<div class='main'>
+	<div class='container forum'>
+		{% for question in questions %}
+		<div class='item'>
+			<div class='rating number'>
+				<div class='item-count'>{{question.rating}}</div>
+				<div class='subtext'>{% trans "rating" %}</div>
+			</div>
+			<div class='answer number'>
+				<div class='item-count'>{{question.answer_count}}</div>
+				<div class='subtext'>{% trans "answers" %}</div>
+			</div>
+			<div class='view number'>
+				<div class='item-count'>{{question.view_count}}</div>
+				<div class='subtext'>{% trans "views" %}</div>
+			</div>
+			<div><a href='/question/{{question.id}}'>{{question.title}}</a></div>
+			<div class='tags'>
+				{% for tag in question.tags.all %}
+					<div class='tag'>{{tag.title}}</div>
+				{% endfor %}
+			</div>
+			<div class='subtext sender'>
+				{{question.sender}}
+				{% if question.sender.get_full_name %}
+					({{question.sender.get_full_name}})
+				{% endif %}
+				<img class='ava_small' src='/media/{{question.sender.avatar}}'/>
+			</div>
 		</div>
-		<div class='answer number'>
-			<div class='item-count'>{{question.answer_count}}</div>
-			<div class='subtext'>{% trans "answers" %}</div>
-		</div>
-		<div class='view number'>
-			<div class='item-count'>{{question.view_count}}</div>
-			<div class='subtext'>{% trans "views" %}</div>
-		</div>
-		<div><a href='/question/{{question.id}}'>{{question.title}}</a></div>
-		<div class='tags'>
-			{% for tag in question.tags.all %}
-			<div class='tag'>{{tag.title}}</div>
-			{% endfor %}
-		</div>
-		<div class='subtext sender'>
-			{{question.sender}}
-			{% if question.sender.get_full_name %}
-			({{question.sender.get_full_name}})
-			{% endif %}
-			<img class='ava_small' src='/media/{{question.sender.avatar}}'/>
-		</div>
+		{% endfor %}
 	</div>
-	{% endfor %}
+	<div class='container' style='float:right;'>
+		{% for tag in tags %}
+			{% if tag.count > 0 %}
+				<div class='tag'>{{tag.title}}</div>x{{tag.count}}<br/>
+			{% endif %}
+		{% endfor %}
+	</div>
 </div>
 
-Total: {{total_pages}}
+<!-- Total: {{total_pages}}
 <br/>
-Current: {{current_page}}
+Current: {{current_page}} -->
 {% endblock %}
