@@ -1,0 +1,3 @@
+Dependences:
+	- django-simple-captcha
+	- sorl-thumbnail
