@@ -32,7 +32,8 @@ def forum (request, number=1, bytag=None):
 		'questions':questions,
 		'current_page':current_page,
 		'total_pages':total_pages,
-		'tags':tags
+		'tags':tags,
+		'bytag':bytag
 		})
 
 def one_question (request, number=1):

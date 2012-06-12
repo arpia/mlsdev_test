@@ -8,6 +8,9 @@
 {% block header %}
 <div class='second title'>
     {% trans "Questions" %}
+    {% if bytag %}
+    	({% trans "by tag" %} "{{bytag}}")
+    {% endif %}
 </div>
 {% endblock %}
 
